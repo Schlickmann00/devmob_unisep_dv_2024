@@ -1,0 +1,115 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(AplicativoMarcador());
+}
+
+// Classe principal do aplicativo que cria e configura o aplicativo
+class AplicativoMarcador extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Marcador de Pontos',
+      theme: ThemeData(
+        primarySwatch: Colors.blue, // Define a cor principal do aplicativo
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: TelaMarcador(), // Define a tela inicial do aplicativo como TelaMarcador
+    );
+  }
+}
+
+// Tela do marcador que permite a marcação de pontos para duas equipes
+class TelaMarcador extends StatefulWidget {
+  @override
+  _TelaMarcadorState createState() => _TelaMarcadorState();
+}
+
+// Estado da tela do marcador, gerencia a pontuação das duas equipes
+class _TelaMarcadorState extends State<TelaMarcador> {
+  int pontuacaoEquipeA = 0; // Pontuação da Equipe A
+  int pontuacaoEquipeB = 0; // Pontuação da Equipe B
+
+  // Função para incrementar a pontuação de uma equipe
+  void _incrementarPontuacao(String equipe) {
+    setState(() {
+      if (equipe == 'A' && pontuacaoEquipeA < 12) {
+        pontuacaoEquipeA++;
+      } else if (equipe == 'B' && pontuacaoEquipeB < 12) {
+        pontuacaoEquipeB++;
+      }
+    });
+  }
+
+  // Função para decrementar a pontuação de uma equipe
+  void _decrementarPontuacao(String equipe) {
+    setState(() {
+      if (equipe == 'A' && pontuacaoEquipeA > 0) {
+        pontuacaoEquipeA--;
+      } else if (equipe == 'B' && pontuacaoEquipeB > 0) {
+        pontuacaoEquipeB--;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Marcador de Pontos'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Equipe A: $pontuacaoEquipeA', // Exibe a pontuação da Equipe A
+              style: TextStyle(fontSize: 30),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // Botão para incrementar a pontuação da Equipe A
+                FloatingActionButton(
+                  onPressed: () => _incrementarPontuacao('A'),
+                  tooltip: 'Incrementar',
+                  child: Icon(Icons.add),
+                ),
+                // Botão para decrementar a pontuação da Equipe A
+                FloatingActionButton(
+                  onPressed: () => _decrementarPontuacao('A'),
+                  tooltip: 'Decrementar',
+                  child: Icon(Icons.remove),
+                ),
+              ],
+            ),
+            SizedBox(height: 50),
+            Text(
+              'Equipe B: $pontuacaoEquipeB', // Exibe a pontuação da Equipe B
+              style: TextStyle(fontSize: 30),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // Botão para incrementar a pontuação da Equipe B
+                FloatingActionButton(
+                  onPressed: () => _incrementarPontuacao('B'),
+                  tooltip: 'Incrementar',
+                  child: Icon(Icons.add),
+                ),
+                // Botão para decrementar a pontuação da Equipe B
+                FloatingActionButton(
+                  onPressed: () => _decrementarPontuacao('B'),
+                  tooltip: 'Decrementar',
+                  child: Icon(Icons.remove),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
